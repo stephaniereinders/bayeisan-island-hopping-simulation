@@ -23,6 +23,12 @@ shinyUI(
                      max = 50,
                      value = 10),
         
+        numericInput(inputId = "starting_island", 
+                     label = "Starting island:",
+                     min = 1,
+                     max = 20,
+                     value = 3),
+        
         # Buttons
         actionButton("startButton", "Start your trip"),
         actionButton("sub1", "- 1"),
