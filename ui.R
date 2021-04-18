@@ -18,7 +18,7 @@ shinyUI(
                      value = 5),
         
         # Buttons
-        actionButton("add1", "+ 1"),
+        actionButton("startButton", "Start your trip"),
         actionButton("sub1", "- 1"),
         actionButton("reset", "set to 0"),
         br()
@@ -26,7 +26,7 @@ shinyUI(
       
       # Main panel
       mainPanel(
-        textOutput("count")
+        tableOutput("df")
       )
     )
   )
