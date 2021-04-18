@@ -8,6 +8,9 @@ shinyServer(
     # Keep track of current island
     current_island <- reactiveValues(islandnum = as.integer(0))
     
+    # Keep track of current proposed island
+    proposed_island <- reactiveValues(islandnum = as.integer(0))
+    
     # Update starting island slider
     observe({
       max_val <- input$num_islands
@@ -25,9 +28,20 @@ shinyServer(
       df$df_data[current_island$islandnum, 'visits'] <- as.integer(1)  # Set number of visits of starting island to 1
     })
     
+    #--- ON VISIT
+    observeEvent(input$visitButton, {
+      proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)  # propose new island
+      current_island$islandnum <- proposed_island$islandnum   # set current island to proposed island
+      df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)  # Add 1 to visits to current_island
+    })
+    
     #--- DISPLAY
     output$df <- renderTable({
       df$df_data
+    })
+    
+    output$proposed_island <- renderText({
+      paste("Proposed island is ", proposed_island$islandnum)
     })
     
   }

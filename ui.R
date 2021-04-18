@@ -31,14 +31,14 @@ shinyUI(
         
         # Buttons
         actionButton("startButton", "Start your trip"),
-        actionButton("sub1", "- 1"),
-        actionButton("reset", "set to 0"),
+        actionButton("visitButton", "Visit another island?"),
         br()
       ),
       
       # Main panel
       mainPanel(
-        tableOutput("df")
+        tableOutput("df"),
+        textOutput("proposed_island")
       )
     )
   )
