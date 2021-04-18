@@ -8,7 +8,8 @@ shinyServer(
     #--- ON START
     observeEvent(input$startButton, {
       island_nums <- 1:input$num_islands
-      df$df_data <- data.frame("island_nums"=island_nums)
+      island_pops <- sample.int(n=input$max_pop, size=input$num_islands, replace=TRUE)  # Randomly generates pops.
+      df$df_data <- data.frame("island_nums"=island_nums, "island_pops"=island_pops)
     })
     
     #--- DISPLAY

@@ -17,6 +17,12 @@ shinyUI(
                      max = 20,
                      value = 5),
         
+        numericInput(inputId = "max_pop", 
+                     label = "Maximum population of each island:",
+                     min = 5,
+                     max = 50,
+                     value = 10),
+        
         # Buttons
         actionButton("startButton", "Start your trip"),
         actionButton("sub1", "- 1"),
