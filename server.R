@@ -30,9 +30,19 @@ shinyServer(
     
     #--- ON VISIT
     observeEvent(input$visitButton, {
-      proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)  # propose new island
-      current_island$islandnum <- proposed_island$islandnum   # set current island to proposed island
-      df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)  # Add 1 to visits to current_island
+      # propose new island
+      proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)
+      # Decide whether to visit proposed island
+      visit_yn <- visit_island_yn(current_island$islandnum, proposed_island$islandnum, df$df_data['island_pops'] )
+      
+      # If you decided to move, update current island and visits in dataframe
+      if (visit_yn == 'y'){
+        # set current island to proposed island
+        current_island$islandnum <- proposed_island$islandnum
+        # Add 1 to visits to current_island
+        df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)  
+      } 
+      
     })
     
     #--- DISPLAY
