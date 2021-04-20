@@ -10,7 +10,6 @@ shinyUI(
       br(),
       hr(),
       textOutput("current_island"),
-      textOutput("proposed_island"),
       br(),
       hr()
       )
@@ -40,7 +39,6 @@ shinyUI(
         # Buttons
         br(),
         actionButton("startButton", "Start your trip"),
-        actionButton("considerButton", "Consider visiting another island"),
         actionButton("visitButton", "Visit another island?"),
         br()
         )

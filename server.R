@@ -47,15 +47,10 @@ shinyServer(
         mutate('proportion_of_total_pop' = island_pops/total_pop)
     })
     
-    #--- ON CONSIDER
-    observeEvent(input$considerButton, {
-      # propose new island
-      proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)
-    
-    })
-    
     #--- ON VISIT
     observeEvent(input$visitButton, {
+      # propose new island
+      proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)
       
       # Decide whether to visit proposed island
       visit_yn <- visit_island_yn(current_island$islandnum, proposed_island$islandnum, df$df_data['island_pops'] )
@@ -84,10 +79,6 @@ shinyServer(
     
     output$current_island <- renderText({
       paste("Current island is ", current_island$islandnum)
-    })
-    
-    output$proposed_island <- renderText({
-      paste("Proposed island is ", proposed_island$islandnum)
     })
     
   }
