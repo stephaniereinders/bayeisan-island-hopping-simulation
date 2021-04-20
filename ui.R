@@ -8,12 +8,14 @@ shinyUI(
       # Data
       tableOutput("df"),
       br(),
-      hr(),
-      textOutput("current_island"),
-      br(),
-      hr()
       )
     ),
+    
+    hr(),
+    textOutput("current_island"),
+    br(),
+    hr(),
+    
     
     fluidRow(      
       column(3,

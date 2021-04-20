@@ -55,20 +55,19 @@ shinyServer(
       # Decide whether to visit proposed island
       visit_yn <- visit_island_yn(current_island$islandnum, proposed_island$islandnum, df$df_data['island_pops'] )
       
-      # If you decided to move, update current island and visits in dataframe
+      # If you decided to move, update current island
       if (visit_yn == 'y'){
         # set current island to proposed island
         current_island$islandnum <- proposed_island$islandnum
-        
-        # Add 1 to visit to current_island
-        df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)
-        
-        # Recalculate proportion_of_total_visits
-        total_visits = sum(df$df_data['visits'])
-        df$df_data <- df$df_data %>% 
-          mutate(proportion_of_total_visits = visits/total_visits)
-
       } 
+      
+      # Update visits
+      df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)
+      
+      # Recalculate proportion_of_total_visits
+      total_visits = sum(df$df_data['visits'])
+      df$df_data <- df$df_data %>% 
+        mutate(proportion_of_total_visits = visits/total_visits)
       
     })
     
