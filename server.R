@@ -4,13 +4,9 @@ library(tidyverse)
 shinyServer(
   function(input, output, session) {
     
-    # Keep track of dataframe
+    # Keep track of current values and dataframe
     df <- reactiveValues(df_data = NULL)
-    
-    # Keep track of current island
     current_island <- reactiveValues(islandnum = as.integer(0))
-    
-    # Keep track of current proposed island
     proposed_island <- reactiveValues(islandnum = as.integer(0))
     
     # Update starting island slider
@@ -51,11 +47,15 @@ shinyServer(
         mutate('proportion_of_total_pop' = island_pops/total_pop)
     })
     
-    #--- ON VISIT
-    observeEvent(input$visitButton, {
-      
+    #--- ON CONSIDER
+    observeEvent(input$considerButton, {
       # propose new island
       proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)
+    
+    })
+    
+    #--- ON VISIT
+    observeEvent(input$visitButton, {
       
       # Decide whether to visit proposed island
       visit_yn <- visit_island_yn(current_island$islandnum, proposed_island$islandnum, df$df_data['island_pops'] )
@@ -80,6 +80,10 @@ shinyServer(
     #--- DISPLAY
     output$df <- renderTable({
       df$df_data
+    })
+    
+    output$current_island <- renderText({
+      paste("Current island is ", current_island$islandnum)
     })
     
     output$proposed_island <- renderText({

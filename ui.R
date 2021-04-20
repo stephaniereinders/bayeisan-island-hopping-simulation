@@ -5,12 +5,16 @@ shinyUI(
     
     fluidRow(
       column(3,
-      
+      # Data
       tableOutput("df"),
+      br(),
+      hr(),
+      textOutput("current_island"),
       textOutput("proposed_island"),
+      br(),
+      hr()
       )
     ),
-    
     
     fluidRow(      
       column(3,
@@ -34,6 +38,7 @@ shinyUI(
       column(4,
         
         # Buttons
+        br(),
         actionButton("startButton", "Start your trip"),
         actionButton("considerButton", "Consider visiting another island"),
         actionButton("visitButton", "Visit another island?"),
