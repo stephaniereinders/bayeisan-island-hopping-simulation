@@ -3,7 +3,7 @@ shinyUI(
   fluidPage(
     #--- new
     # Title
-    titlePanel("Simple counter using reactiveValues() - An example"),
+    titlePanel("Island Hopping Simulation"),
     
     sidebarLayout(      
       
