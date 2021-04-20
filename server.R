@@ -1,4 +1,6 @@
 library(shiny)
+library(tidyverse)
+
 shinyServer(
   function(input, output, session) {
     
@@ -21,17 +23,40 @@ shinyServer(
     
     #--- ON START
     observeEvent(input$startButton, {
-      current_island$islandnum <- as.integer(input$starting_island)  # Set current island to starting island
+      # Set current island to starting island
+      current_island$islandnum <- as.integer(input$starting_island)  
+      
+      # Generate vector of island numbers (number islands seqentially)
       island_nums <- 1:input$num_islands
-      island_pops <- sample.int(n=input$max_pop, size=input$num_islands, replace=TRUE)  # Randomly generates pops.
-      df$df_data <- data.frame("island_nums"=island_nums, "island_pops"=island_pops, "visits"=as.integer(0))
-      df$df_data[current_island$islandnum, 'visits'] <- as.integer(1)  # Set number of visits of starting island to 1
+      
+      # Randomly generate island populations with user input maximum population
+      island_pops <- sample.int(n=input$max_pop, size=input$num_islands, replace=TRUE)  
+      
+      # Get total of all island populations
+      total_pop = sum(island_pops)
+      
+      # Create dataframe
+      df$df_data <- data.frame("island_nums"=island_nums, 
+                               "island_pops"=island_pops,
+                               "proportion_of_total_pop"=0,
+                               "visits"=as.integer(0),
+                               "proportion_of_total_visits"=0)
+      
+      # Set number of visits of starting island to 1
+      df$df_data[current_island$islandnum, 'visits'] <- as.integer(1)
+      df$df_data[current_island$islandnum, 'proportion_of_total_visits'] <- as.integer(1)
+      
+      # Add proportion of total population column
+      df$df_data <- df$df_data %>% 
+        mutate('proportion_of_total_pop' = island_pops/total_pop)
     })
     
     #--- ON VISIT
     observeEvent(input$visitButton, {
+      
       # propose new island
       proposed_island$islandnum <- propose_island(current_island$islandnum, input$num_islands)
+      
       # Decide whether to visit proposed island
       visit_yn <- visit_island_yn(current_island$islandnum, proposed_island$islandnum, df$df_data['island_pops'] )
       
@@ -39,8 +64,15 @@ shinyServer(
       if (visit_yn == 'y'){
         # set current island to proposed island
         current_island$islandnum <- proposed_island$islandnum
-        # Add 1 to visits to current_island
-        df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)  
+        
+        # Add 1 to visit to current_island
+        df$df_data[current_island$islandnum, 'visits'] <- as.integer(df$df_data[current_island$islandnum, 'visits'] + 1)
+        
+        # Recalculate proportion_of_total_visits
+        total_visits = sum(df$df_data['visits'])
+        df$df_data <- df$df_data %>% 
+          mutate(proportion_of_total_visits = visits/total_visits)
+
       } 
       
     })
