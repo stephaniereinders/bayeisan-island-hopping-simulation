@@ -42,7 +42,14 @@ shinyUI(
         br(),
         actionButton("startButton", "Start your trip"),
         actionButton("visitButton", "Visit another island?"),
-        actionButton("simButton", "Simulate 1000 visits?"),
+        
+        sliderInput(inputId="n",
+                    label="Number of visits to simulate",
+                    value = 250,
+                    min=2,
+                    max=10000),
+        
+        actionButton("simButton", "Simulate n visits?"),
         br()
         )
       )

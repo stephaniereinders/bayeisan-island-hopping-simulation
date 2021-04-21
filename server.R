@@ -59,7 +59,7 @@ shinyServer(
     
     #--- ON SIMULATE
     observeEvent(input$simButton, {
-      for (i in 1:1000) {
+      for (i in 1:input$n) {
         output <- visit_island(current_island$islandnum, proposed_island$islandnum, input$num_islands, df$df_data)
         current_island$islandnum <- output[[1]]
         proposed_island$islandnum <- output[[2]]
