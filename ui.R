@@ -1,9 +1,12 @@
 library(shiny)
+library(shinyjs)
 library(shinythemes)
 
 shinyUI(
   fluidPage(
     theme = shinytheme("cerulean"),
+    useShinyjs(),
+    
     titlePanel("Island Hopping Simulation"),
     
     p("Simulate island hopping using Bayesian statistics and the Metropolis-Hastings algorithm. This interactive simulation demonstrates how populations influence movement decisions in a chain of islands."),
@@ -48,7 +51,7 @@ shinyUI(
           )
         ),
         
-        hr(),
+        br(),
         
         sliderInput(inputId="n",
                     label="Number of visits",

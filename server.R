@@ -4,6 +4,10 @@ library(tidyverse)
 shinyServer(
   function(input, output, session) {
     
+    # Disable buttons
+    disable("visitButton")
+    disable("simButton")
+    
     # Keep track of current values and dataframe
     df <- reactiveValues(df_data = NULL)
     current_island <- reactiveValues(islandnum = as.integer(0))
@@ -17,7 +21,7 @@ shinyServer(
       updateSliderInput(session, "starting_island", max=max_val)
     })
     
-    #--- ON START
+    # ON START ----
     observeEvent(input$startButton, {
       # Set current island to starting island
       current_island$islandnum <- as.integer(input$starting_island)  
@@ -44,14 +48,13 @@ shinyServer(
       # Add proportion of total population column
       df$df_data <- df$df_data %>% 
         mutate('proportion_of_total_pop' = island_pops/total_pop)
+      
+      # Enable buttons
+      enable("visitButton")
+      enable("simButton")
     })
     
-    output$plot_islands <- renderPlot({
-      req(!is.null(df$df_data))
-      plot_islands(df = df$df_data, current_island = current_island$islandnum)
-    })
-    
-    #--- ON VISIT
+    # ON VISIT ----
     observeEvent(input$visitButton, {
       
       output <- visit_island(
@@ -66,7 +69,7 @@ shinyServer(
       
     })
     
-    #--- ON SIMULATE
+    # ON SIMULATE ----
     observeEvent(input$simButton, {
       for (i in 1:input$n) {
         output <- visit_island(current_island$islandnum, proposed_island$islandnum, input$num_islands, df$df_data)
@@ -77,15 +80,17 @@ shinyServer(
     })
     
     #--- DISPLAY
-    output$df <- renderTable({
-      df$df_data
-    })
-    
     output$current_island <- renderText({
       req(current_island$islandnum != 0)
       paste("Current island is ", current_island$islandnum)
     })
     
-  }
-  
-)
+    output$plot_islands <- renderPlot({
+      req(!is.null(df$df_data))
+      plot_islands(df = df$df_data, current_island = current_island$islandnum)
+    })
+    
+    output$df <- renderTable({
+      df$df_data
+    })
+})
