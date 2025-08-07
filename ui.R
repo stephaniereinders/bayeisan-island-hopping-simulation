@@ -13,35 +13,50 @@ shinyUI(
         
         # Parameters
         h4("Choose Parameters for the Simulation"),
-        numericInput(inputId = "num_islands", 
-                     label = "Number of islands:",
-                     min = 3,
-                     max = 20,
-                     value = 5),
+        fluidRow(
+          column(width = 6,
+                 numericInput(inputId = "num_islands", 
+                              label = "Number of islands",
+                              min = 3,
+                              max = 20,
+                              value = 5)
+          ),
+          column(width = 6,
+            numericInput(inputId = "starting_island", 
+                         label = "Starting island",
+                         min = 1,
+                         max = 20,
+                         value = 3)
+          )
+        ),
+        
         numericInput(inputId = "max_pop", 
-                     label = "Maximum population of each island:",
+                     label = "Maximum population of each island",
                      min = 5,
                      max = 50,
                      value = 10),
-        helpText("The app will randomly select a population for each island between 1 and the maximum population."),
-        numericInput(inputId = "starting_island", 
-                     label = "Choose a starting island:",
-                     min = 1,
-                     max = 20,
-                     value = 3),
         hr(),
         # Buttons
         h4("Simulations"),
-        actionButton("startButton", "Start your trip"),
-        actionButton("visitButton", "Visit another island?"),
+        fluidRow(
+          column(width = 6,
+                 actionButton("startButton", "Start trip")
+            
+          ),
+          column(width = 6,
+                 actionButton("visitButton", "Visit island"),
+          )
+        ),
+        
+        hr(),
         
         sliderInput(inputId="n",
-                    label="Number of visits to simulate",
+                    label="Number of visits",
                     value = 250,
                     min=2,
                     max=10000),
         
-        actionButton("simButton", "Simulate n visits?"),
+        actionButton("simButton", "Simulate n visits"),
       
       ), # end sidebarPanel
       
