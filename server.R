@@ -46,6 +46,11 @@ shinyServer(
         mutate('proportion_of_total_pop' = island_pops/total_pop)
     })
     
+    output$plot_islands <- renderPlot({
+      req(!is.null(df$df_data))
+      plot_islands(df = df$df_data, current_island = current_island$islandnum)
+    })
+    
     #--- ON VISIT
     observeEvent(input$visitButton, {
       

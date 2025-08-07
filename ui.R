@@ -3,6 +3,10 @@ shinyUI(
   fluidPage(
     titlePanel("Island Hopping Simulation"),
     
+    p("Simulate island hopping using Bayesian statistics and the Metropolis-Hastings algorithm. This interactive simulation demonstrates how populations influence movement decisions in a chain of islands."),
+    
+    plotOutput("plot_islands"),
+    
     fluidRow(
       column(3,
       # Data

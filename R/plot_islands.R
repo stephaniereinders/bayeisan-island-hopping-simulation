@@ -7,7 +7,7 @@ plot_islands <- function(df, current_island){
   df$color[current_island] <- "current"
   
   # Create island plot
-  p <- df %>% ggplot(aes(x=islands, y=1, size=island_pops, color=as.factor(color))) +
+  p <- df %>% ggplot(aes(x=island_nums, y=1, size=island_pops, color=as.factor(color))) +
     geom_point() +
     theme_bw() + 
     scale_x_discrete(labels = NULL, breaks = NULL) + 
@@ -17,7 +17,7 @@ plot_islands <- function(df, current_island){
          y = "",
          color="location",
          size="population") +
-    annotate("text", x = df$islands, y = 0.9, label = df$island_pops)
+    annotate("text", x = df$island_nums, y = 0.9, label = df$island_pops)
 
   return(p)
 }
