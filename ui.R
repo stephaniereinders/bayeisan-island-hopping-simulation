@@ -1,6 +1,9 @@
 library(shiny)
+library(shinythemes)
+
 shinyUI(
   fluidPage(
+    theme = shinytheme("cerulean"),
     titlePanel("Island Hopping Simulation"),
     
     p("Simulate island hopping using Bayesian statistics and the Metropolis-Hastings algorithm. This interactive simulation demonstrates how populations influence movement decisions in a chain of islands."),
@@ -9,6 +12,7 @@ shinyUI(
       sidebarPanel(width = 3,
         
         # Parameters
+        h4("Choose Parameters for the Simulation"),
         numericInput(inputId = "num_islands", 
                      label = "Number of islands:",
                      min = 3,
@@ -19,13 +23,15 @@ shinyUI(
                      min = 5,
                      max = 50,
                      value = 10),
+        helpText("The app will randomly select a population for each island between 1 and the maximum population."),
         numericInput(inputId = "starting_island", 
-                     label = "Starting island:",
+                     label = "Choose a starting island:",
                      min = 1,
                      max = 20,
                      value = 3),
+        hr(),
         # Buttons
-        br(),
+        h4("Simulations"),
         actionButton("startButton", "Start your trip"),
         actionButton("visitButton", "Visit another island?"),
         
