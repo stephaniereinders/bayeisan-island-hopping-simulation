@@ -67,6 +67,7 @@ shinyServer(
         df$df_data
       )
       current_island$islandnum <- output[[1]]
+      current_island$islandname <- paste("Island", current_island$islandnum)
       proposed_island$islandnum <- output[[2]]
       df$df_data <- output[[3]]
       
@@ -80,6 +81,8 @@ shinyServer(
         proposed_island$islandnum <- output[[2]]
         df$df_data <- output[[3]]
       }
+      current_island$islandnum <- output[[1]]
+      current_island$islandname <- paste("Island", current_island$islandnum)
     })
     
     #--- DISPLAY
