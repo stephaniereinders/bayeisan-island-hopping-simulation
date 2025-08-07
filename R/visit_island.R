@@ -17,9 +17,9 @@ visit_island <- function(current_island, proposed_island, num_islands, df){
   }
   
   #Chose whether to move to proposed island
-  island_pops <- df['island_pops']
-  pi_move = min(island_pops$island_pops[proposed_island]/island_pops$island_pops[current_island], 1)
-  if (island_pops$island_pops[proposed_island] > island_pops$island_pops[current_island]){
+  island_pop <- df$island_pop
+  pi_move = min(island_pop[proposed_island]/island_pop[current_island], 1)
+  if (island_pop[proposed_island] > island_pop[current_island]){
     visit_yn <- 'y'
   } else {
     u = runif(n=1)

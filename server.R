@@ -10,7 +10,8 @@ shinyServer(
     
     # Keep track of current values and dataframe
     df <- reactiveValues(df_data = NULL)
-    current_island <- reactiveValues(islandnum = as.integer(0))
+    current_island <- reactiveValues(islandnum = as.integer(0),
+                                     islandname = as.character('Island 0'))
     proposed_island <- reactiveValues(islandnum = as.integer(0))
     
     # Update starting island slider
@@ -24,10 +25,12 @@ shinyServer(
     # ON START ----
     observeEvent(input$startButton, {
       # Set current island to starting island
-      current_island$islandnum <- as.integer(input$starting_island)  
+      current_island$islandnum <- as.integer(input$starting_island) 
+      current_island$islandname <- paste("Island", current_island$islandnum)
       
       # Generate vector of island numbers (number islands sequentially)
       island_nums <- 1:input$num_islands
+      island_names <- paste("Island", island_nums)
       
       # Randomly generate island populations with user input maximum population
       island_pops <- sample.int(n=input$max_pop, size=input$num_islands, replace=TRUE)  
@@ -35,8 +38,8 @@ shinyServer(
       total_pop = sum(island_pops)
       
       # Create dataframe
-      df$df_data <- data.frame("island_nums"=island_nums, 
-                               "island_pops"=island_pops,
+      df$df_data <- data.frame("island_name"=island_names, 
+                               "island_pop"=island_pops,
                                "proportion_of_total_pop"=0,
                                "visits"=as.integer(0),
                                "proportion_of_total_visits"=0)
@@ -81,8 +84,8 @@ shinyServer(
     
     #--- DISPLAY
     output$current_island <- renderText({
-      req(current_island$islandnum != 0)
-      paste("Current island is ", current_island$islandnum)
+      req(current_island$islandname != "Island 0")
+      paste("Current island is ", current_island$islandname)
     })
     
     output$plot_islands <- renderPlot({

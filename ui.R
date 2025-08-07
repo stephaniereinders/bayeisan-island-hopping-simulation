@@ -69,7 +69,7 @@ shinyUI(
         br(),
         
         # Plot
-        plotOutput("plot_islands", height = "200px"),
+        plotOutput("plot_islands", height = "150px"),
         br(),
         
         tableOutput("df"),
