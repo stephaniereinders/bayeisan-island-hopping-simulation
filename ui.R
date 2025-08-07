@@ -41,23 +41,15 @@ shinyUI(
       
       mainPanel(
         
-        hr(),
         textOutput("current_island"),
         br(),
-        hr(),
         
-        fluidRow(
-          column(6,
-                 # Plot
-                 plotOutput("plot_islands"),
-                 br(),
-          ),
-          column(6,
-                 # Data
-                 tableOutput("df"),
-                 br(),
-          )
-        )
+        # Plot
+        plotOutput("plot_islands", height = "200px"),
+        br(),
+        
+        tableOutput("df"),
+        
       ) # end mainPanel
     ) # end sidebarLayout
   ) # end fluidPage
