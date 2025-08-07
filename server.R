@@ -22,12 +22,11 @@ shinyServer(
       # Set current island to starting island
       current_island$islandnum <- as.integer(input$starting_island)  
       
-      # Generate vector of island numbers (number islands seqentially)
+      # Generate vector of island numbers (number islands sequentially)
       island_nums <- 1:input$num_islands
       
       # Randomly generate island populations with user input maximum population
       island_pops <- sample.int(n=input$max_pop, size=input$num_islands, replace=TRUE)  
-      
       # Get total of all island populations
       total_pop = sum(island_pops)
       
@@ -50,7 +49,12 @@ shinyServer(
     #--- ON VISIT
     observeEvent(input$visitButton, {
       
-      output <- visit_island(current_island$islandnum, proposed_island$islandnum, input$num_islands, df$df_data)
+      output <- visit_island(
+        current_island$islandnum, 
+        proposed_island$islandnum, 
+        input$num_islands, 
+        df$df_data
+      )
       current_island$islandnum <- output[[1]]
       proposed_island$islandnum <- output[[2]]
       df$df_data <- output[[3]]

@@ -16,7 +16,6 @@ shinyUI(
     br(),
     hr(),
     
-    
     fluidRow(      
       column(3,
         # Parameters
