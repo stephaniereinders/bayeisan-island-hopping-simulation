@@ -82,6 +82,7 @@ shinyServer(
     })
     
     output$current_island <- renderText({
+      req(current_island$islandnum != 0)
       paste("Current island is ", current_island$islandnum)
     })
     

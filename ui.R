@@ -5,23 +5,9 @@ shinyUI(
     
     p("Simulate island hopping using Bayesian statistics and the Metropolis-Hastings algorithm. This interactive simulation demonstrates how populations influence movement decisions in a chain of islands."),
     
-    plotOutput("plot_islands"),
-    
-    fluidRow(
-      column(3,
-      # Data
-      tableOutput("df"),
-      br(),
-      )
-    ),
-    
-    hr(),
-    textOutput("current_island"),
-    br(),
-    hr(),
-    
-    fluidRow(      
-      column(3,
+    sidebarLayout(
+      sidebarPanel(width = 3,
+        
         # Parameters
         numericInput(inputId = "num_islands", 
                      label = "Number of islands:",
@@ -37,10 +23,7 @@ shinyUI(
                      label = "Starting island:",
                      min = 1,
                      max = 20,
-                     value = 3)
-        ),
-      column(4,
-        
+                     value = 3),
         # Buttons
         br(),
         actionButton("startButton", "Start your trip"),
@@ -53,8 +36,29 @@ shinyUI(
                     max=10000),
         
         actionButton("simButton", "Simulate n visits?"),
-        br()
+      
+      ), # end sidebarPanel
+      
+      mainPanel(
+        
+        hr(),
+        textOutput("current_island"),
+        br(),
+        hr(),
+        
+        fluidRow(
+          column(6,
+                 # Plot
+                 plotOutput("plot_islands"),
+                 br(),
+          ),
+          column(6,
+                 # Data
+                 tableOutput("df"),
+                 br(),
+          )
         )
-      )
-    )
-  )
+      ) # end mainPanel
+    ) # end sidebarLayout
+  ) # end fluidPage
+) # end shinyUI
