@@ -65,7 +65,7 @@ shinyUI(
       
       mainPanel(
         
-        textOutput("current_island"),
+        h3(textOutput("current_island")),
         br(),
         
         # Plot
