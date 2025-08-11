@@ -1,8 +1,8 @@
 library(shiny)
 library(tidyverse)
 
-shinyServer(
-  function(input, output, session) {
+
+server <- function(input, output, session) {
     
     # Disable buttons
     disable("visitButton")
@@ -99,4 +99,4 @@ shinyServer(
     output$df <- renderTable({
       df$df_data
     })
-})
+}
